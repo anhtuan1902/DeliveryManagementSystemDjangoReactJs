@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'delivery.apps.DeliveryConfig',
 ]
 
-AUTH_USER_MODEL = 'delivery.User'
+AUTH_USER_MODEL = 'delivery.AdminUser'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

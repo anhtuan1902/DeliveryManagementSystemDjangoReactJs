@@ -1,35 +1,40 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, AbstractBaseUser
 from django.utils.safestring import mark_safe
 
 
-class User(AbstractUser):
+class AdminUser(AbstractUser):
     updated_date = models.DateTimeField(auto_now=True)
-    is_admin = models.BooleanField(default=False)
-    is_customer = models.BooleanField(default=False)
-    is_shipper = models.BooleanField(default=False)
-
-
-class AdminUser(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
-    avatar = models.ImageField(upload_to='avatar/%Y/%m', default='avatar/avatar-default.png')
+    avatar = models.ImageField(upload_to='avatar/admin/%Y/%m', default='avatar/avatar-default.png')
 
     def user_img(self):
         return mark_safe('<img src="{}" width="100" alt="avatar"/>'.format(self.avatar.url))
 
 
-class Customer(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+class Customer(AbstractBaseUser):
+    username = models.CharField(max_length=150, unique=True, null=False)
+    avatar = models.ImageField(upload_to='avatar/customers/%Y/%m', null=False)
+    first_name = models.CharField(max_length=150, null=True)
+    last_name = models.CharField(max_length=150, null=True)
+    email = models.CharField(max_length=254, unique=True, null=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+    def user_img(self):
+        return mark_safe('<img src="{}" width="100" alt="avatar"/>'.format(self.avatar.url))
+
+
+class Shipper(AbstractBaseUser):
+    username = models.CharField(max_length=150, unique=True, null=False)
     avatar = models.ImageField(upload_to='avatar/%Y/%m', null=False)
-
-    def user_img(self):
-        return mark_safe('<img src="{}" width="100" alt="avatar"/>'.format(self.avatar.url))
-
-
-class Shipper(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    first_name = models.CharField(max_length=150, null=True)
+    last_name = models.CharField(max_length=150, null=True)
+    email = models.CharField(max_length=254, unique=True, null=False)
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
     CMND = models.CharField(max_length=50, null=False)
-    avatar = models.ImageField(upload_to='avatar/%Y/%m', null=False)
     already_verify = models.BooleanField(default=False)
 
     def user_img(self):

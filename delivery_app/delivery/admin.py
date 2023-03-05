@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
-from .models import Customer, AdminUser, Shipper, User, Discount, Order, Post, Auction
+from .models import Customer, AdminUser, Shipper, Discount, Order, Post, Auction
 
 
 class UserAdmin(admin.ModelAdmin):
@@ -45,7 +45,6 @@ class ShipperAdmin(admin.ModelAdmin):
 
 admin.site.site_header = "Delivery Manager System"
 admin.site.site_title = "Delivery Admin"
-admin.site.register(User, UserAdmin)
 admin.site.register(Customer, CustomerAdmin)
 admin.site.register(AdminUser, AdminUserAdmin)
 admin.site.register(Shipper, ShipperAdmin)
