@@ -7,13 +7,10 @@ class AdminUser(AbstractUser):
     updated_date = models.DateTimeField(auto_now=True)
     avatar = models.ImageField(upload_to='avatar/admin/%Y/%m', default='avatar/avatar-default.png')
 
-    def user_img(self):
-        return mark_safe('<img src="{}" width="100" alt="avatar"/>'.format(self.avatar.url))
-
 
 class Customer(AbstractBaseUser):
     username = models.CharField(max_length=150, unique=True, null=False)
-    avatar = models.ImageField(upload_to='avatar/customers/%Y/%m', null=False)
+    avatar = models.ImageField(upload_to='avatar/customers/%Y/%m')
     first_name = models.CharField(max_length=150, null=True)
     last_name = models.CharField(max_length=150, null=True)
     email = models.CharField(max_length=254, unique=True, null=False)
@@ -21,13 +18,10 @@ class Customer(AbstractBaseUser):
     updated_date = models.DateTimeField(auto_now=True)
     is_active = models.BooleanField(default=True)
 
-    def user_img(self):
-        return mark_safe('<img src="{}" width="100" alt="avatar"/>'.format(self.avatar.url))
-
 
 class Shipper(AbstractBaseUser):
     username = models.CharField(max_length=150, unique=True, null=False)
-    avatar = models.ImageField(upload_to='avatar/%Y/%m', null=False)
+    avatar = models.ImageField(upload_to='avatar/shipper/%Y/%m', null=False)
     first_name = models.CharField(max_length=150, null=True)
     last_name = models.CharField(max_length=150, null=True)
     email = models.CharField(max_length=254, unique=True, null=False)
@@ -36,9 +30,6 @@ class Shipper(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     CMND = models.CharField(max_length=50, null=False)
     already_verify = models.BooleanField(default=False)
-
-    def user_img(self):
-        return mark_safe('<img src="{}" width="100" alt="avatar"/>'.format(self.avatar.url))
 
 
 class BaseModel(models.Model):
